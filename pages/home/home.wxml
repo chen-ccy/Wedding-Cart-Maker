@@ -1,0 +1,9 @@
+<!--pages/home/home.wxml-->
+
+<view><text>pages/home/home.wxml</text>
+    <!-- <view class="bottom">
+        <button class="page-control page-inc" plain bindtap="prePhoto" size="mini">上一张</button>
+        <text>第{{photoIndex+1}}页</text>
+        <button class="page-control page-dec" plain bindtap="nextPhoto" size="mini">下一张</button>
+    
+    </view> --></view>

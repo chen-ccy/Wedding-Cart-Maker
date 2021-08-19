@@ -4,12 +4,15 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    canIUseGetUserProfile: false,
-    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName') // 如需尝试获取用户信息可改为false
+    photoList: ['/image/photo1.jpg'],
+    photoIndex: 0,
+    pageNum:1,
+    clickedPageIndex:0,
+    isClick:false
+  },
+  onShareAppMessage(e){
+    console.log(e)
+    console.log(111)
   },
   // 事件处理函数
   bindViewTap() {
@@ -43,6 +46,53 @@ Page({
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+  },
+  nextPhoto(){
+    if(this.data.photoIndex+1<this.data.photoList.length){
+      this.setData({
+        photoIndex: this.data.photoIndex+1,
+        photoSrc: this.data.photoList[this.data.photoIndex]
+      })
+    }
+    
+  },
+  prePhoto(){
+    if(this.data.photoIndex-1>=0){
+      this.setData({
+        photoIndex: this.data.photoIndex-1,
+        photoSrc: this.data.photoList[this.data.photoIndex]
+      })
+    }
+  },
+  imageClick(e){
+    let index = e.currentTarget.dataset['index']
+    this.setData({
+      clickedPageIndex: index
+    })
+    console.log(this.data.photoList)
+  },
+  addImages(){
+    let _this=this
+    let image;
+    wx.chooseImage({
+      count: 9,
+      sizeType: 'original',
+      sourceType: ['album','canera'],
+      success: function(res){
+        _this.data.photoList.push(...res.tempFilePaths)
+        let list = _this.data.photoList
+        console.log(list)
+        _this.setData({
+          photoList: list
+        })
+      }
+    })
+
+  },
+  addNewPage(){
+    this.setData({
+      pageNum: this.data.pageNum+1
     })
   }
 })

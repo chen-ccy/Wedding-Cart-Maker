@@ -1,23 +1,33 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <block wx:if="{{canIUseOpenData}}">
-      <view class="userinfo-avatar" bindtap="bindViewTap">
-        <open-data type="userAvatarUrl"></open-data>
-      </view>
-      <open-data type="userNickName"></open-data>
+<view >
+
+<view class="content">
+<scroll-view scroll-y class="left-content">
+    <block  wx:for="{{pageNum}}">
+        <view class="image-view {{index==clickedPageIndex?'clicked':''}}" style="background-image: url({{photoList[index]}});" bindtap="imageClick" data-index="{{index}}">
+            <!-- <image src="{{photoList[photoIndex]}}" mode="widthFix"/> -->
+            <text class="page-num">第{{index+1}}页</text>
+        </view>
     </block>
-    <block wx:elif="{{!hasUserInfo}}">
-      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-      <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-      <view wx:else> 请使用1.4.4及以上版本基础库 </view>
-    </block>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+</scroll-view>
+
+    <view class="right-content">
+        <button size="mini" bindtap="addImages">添加图片</button>
+        
+    </view>
+    <!-- <view class="bottom">
+        <button class="page-control page-inc" plain bindtap="prePhoto" size="mini">上一张</button>
+        <text>第{{photoIndex+1}}页</text>
+        <button class="page-control page-dec" plain bindtap="nextPhoto" size="mini">下一张</button>
+    
+    </view> -->
+    <view class="tabbar">
+        <view  class="tabbar-item"><image src="/image/back.png" mode="widthFix"></image><text>退出编辑</text></view>
+        <view  class="tabbar-item" bindtap="addNewPage"><image src="/image/addPage.png" mode="widthFix"></image><text>新增页面</text></view>
+        <view  class="tabbar-item"><image src="/image/save.png" mode="widthFix"></image><text>添加文本框</text></view>
+        <view  class="tabbar-item"><image src="/image/save.png" mode="widthFix"></image><text>保存请柬</text></view>
+        <view  class="tabbar-item share"><button size="mini" open-type="share"><image src="/image/share.png" mode="widthFix"></image> <text>预览分享</text>   </button></view>
+    </view>
+</view>
+
 </view>
